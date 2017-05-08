@@ -2,13 +2,12 @@
 # OF ALL TIME
 # python3
 from SimWallet import SimWallet
+from Comm import Comm
 
 def main():
     x = SimWallet()
-    x.set_currency('btc', 10.0)
-    x.set_currency('xrp', 2.0)
-    print(x.balance['btc'])
-    print(x.balance['xrp'])
+    c = Comm()
+    c.run(x)
 
 
 if __name__ == '__main__':

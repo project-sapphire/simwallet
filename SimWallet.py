@@ -2,6 +2,7 @@ import json
 
 # holds an imaginary balance and stuff
 # serializes the data to wallet.json
+# this object only stores the data for the balance
 class SimWallet:
     def __init__(self):
         try:
