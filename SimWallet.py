@@ -8,32 +8,39 @@ class SimWallet:
         try:
             with open('wallet.json') as f:
                 data = json.load(f)
-                self.balance = data
+                self._balance = data
         except EnvironmentError:
             with open('wallet.json', 'w') as f:
                 f.write('{}')
-                self.balance = {}
+                self._balance = {}
 
 
     # saves the current state of the wallet
     # lazy
     def save(self):
         with open('wallet.json', 'w') as f:
-            f.write(json.dumps(self.balance))
+            f.write(json.dumps(self._balance))
 
     def set_currency(self, currency, value):
-        self.balance[currency] = value
+        self._balance[currency] = value
         self.save()
 
-
     def balance(self, currency):
-        if self.balance[currency] == None:
+        try:
+            return self._balance[currency]
+        except KeyError:
             return 0
-        else:
-            return self.balance[currency]
 
-    def pay(self, currency, amount, address):
-        pass
+    def pay(self, currency, amount):
+        try:
+            self._balance[currency] -= amount
+            self.save()
+        except KeyError:
+            pass
 
-    def receive(self, currency, amount, address):
-        pass
+    def receive(self, currency, amount):
+        try:
+            self._balance[currency] += amount
+            self.save()
+        except KeyError:
+            pass
